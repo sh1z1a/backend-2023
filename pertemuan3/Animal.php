@@ -6,11 +6,9 @@ class Animal
     # property animals
     public $animals;
 
-    # method constructor - mengisi data awal
-    # parameter: data hewan (array)
     public function __construct($data)
     {
-     $this->animals = $data;   
+        $this->animals = $data;
     }
 
     # method index - menampilkan data animals
@@ -18,7 +16,7 @@ class Animal
     {
         # gunakan foreach untuk menampilkan data animals (array)
        foreach ($this->animals as $animal){
-            echo $animal;
+            return $this-> animals; $animal;
             echo "</br>";
        }
     }
@@ -29,21 +27,23 @@ class Animal
     {
         # gunakan method array_push untuk menambahkan data baru
         array_push($this->animals, $data); # $data untuk menerima data yang baru ditambahkan 
+
     }
 
     # method update - mengupdate hewan
     # parameter: index dan hewan baru
     public function update($index, $data)
     {
-        // $this->animals[$index] = $data;
+        $this->animals[$index] = $data;
 
         // cek apakah index valid
-        if(!isset($this->animals[index])){
-            throw new Exception("Index tidak keluar");
-        }
+        // if(!isset($this->animals[index])){
+        //     throw new Exception("Index tidak keluar");
+        // }
 
-        $this->animals[$index] = $animal;
-        return $this;
+        // // mengupdate data hewan 
+        // $this->animals[$index] = $animal;
+        // return $this;
     }
 
     # method delete - menghapus hewan
