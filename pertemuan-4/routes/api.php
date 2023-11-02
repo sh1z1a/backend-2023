@@ -31,8 +31,9 @@ Route::post('/animals', [AnimalController::class, 'store']);
 Route::put('/animals', [AnimalController::class, 'update']);
 
 // method DELETE
-Route::put('/animals', [AnimalController::class, 'destroy']);
+Route::delete('/animals', [AnimalController::class, 'destroy']);
 
 // route students dgn method GET
 Route::get('/students', [StudentController::class, 'index']);
+
 
