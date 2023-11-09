@@ -36,4 +36,16 @@ Route::delete('/animals', [AnimalController::class, 'destroy']);
 // route students dgn method GET
 Route::get('/students', [StudentController::class, 'index']);
 
+// route students dgn method POST
+Route::post('/students', [StudentController::class, 'store']);
+
+// route students dgn method PUT
+Route::put('/students/{id}', [StudentController::class, 'update']);
+
+// route students dgn method DELETE
+Route::delete('/students/{id}', [StudentController::class, 'delete']);
+
+// menampilkan detail data dengan method GET dan action SHOW
+Route::get('/students/{id}', [StudentController::class, 'show']);
+
 
