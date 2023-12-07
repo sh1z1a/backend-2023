@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student; // mengimport model student untuk berinteraksi dgn databse
-use App\Models\Student as ModelsStudent;
 
-use function PHPUnit\Framework\returnSelf;
 
 class StudentController extends Controller
 {
@@ -14,8 +12,6 @@ class StudentController extends Controller
     public function index($student){
         // menampilkan data students dari database
         $students = Student::all();
-
-       
 
         if($students){
              $data = [
@@ -47,23 +43,30 @@ class StudentController extends Controller
 
     public function store(Request $request, $input){
 
-        $request->validate([
-            "nama" => "required",
-            "nim" => "required",
-            "email" => "required | email",
-            "jurusan" => "required"
-        ]);
+        // $request->validate([
+        //     "nama" => "required",
+        //     "nim" => "required",
+        //     "email" => "required | email",
+        //     "jurusan" => "required"
+        // ]);
 
         // menangkap data request
-        $input = [
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'jurusan' => $request->jurusan
-        ];
+        // $input = [
+        //     'nama' => $request->nama,
+        //     'nim' => $request->nim,
+        //     'email' => $request->email,
+        //     'jurusan' => $request->jurusan
+        // ];
+
+        $validateData = $request->validate([
+            'nama'=>'required',
+            'nim'=>'numeric|required',
+            'email'=>'email|required',
+            'jurusan'=>'required',
+        ]);
 
         // menggunakan model Student untuk insert data
-        $student = Student::create($input);
+        $student = Student::create($validateData);
 
         $data = [
             'message' => 'Student is created succesfully',
@@ -77,6 +80,7 @@ class StudentController extends Controller
     public function update(Request $request, $id){
         $student = Student::find($id);
 
+        // menghandle data yang tidak ada
         if($student){
             // menangkap data request
             $input = [
@@ -109,6 +113,7 @@ class StudentController extends Controller
     public function destroy($id){
         $student = Student::find($id);
 
+        // menghandle data yg tidak ada
         if($student){
             // hapus student tersebut
             $student->delete();
@@ -123,7 +128,8 @@ class StudentController extends Controller
         }
         else {
             $data = [
-                'message' => 'Student not found'
+                'message' => 'Student not found',
+                'data'=> $student
             ];
 
             return response()->json($data, 404);

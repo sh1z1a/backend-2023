@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Facades;
@@ -48,4 +49,6 @@ Route::delete('/students/{id}', [StudentController::class, 'delete']);
 // menampilkan detail data dengan method GET dan action SHOW
 Route::get('/students/{id}', [StudentController::class, 'show']);
 
-
+// Authentikasi register & login
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
