@@ -37,4 +37,43 @@ class StudentController extends Controller
 
         return response()->json($data, 201);
     }
+
+    public function update(Request $request, $id) {
+        // menangkap data request
+        $input = [
+            'nama'=> $request->nama,
+            'nim'=> $request->nim,
+            'email'=> $request->email,
+            'jurusan'=> $request->jurusan
+            ];
+        
+        // menggunakan model student untuk mengambil data (id) yang akan di update
+        $student = Student::where('id', $id)->update($input);
+
+        $data = [
+            'message'=> 'Data siswa telah berhasil di perbaharui',
+            'data'=> $student,
+        ];
+
+        // mengembalikan dalam bentuk data json dan kode 200 (success)
+        return response()->json($data, 200);
+    }
+
+    public function destroy($id) {
+
+        $student = Student::where('id', $id)->destroy();
+
+        $data = [
+            'message'=> 'Data siswa berhasil dihapus',
+            'data'=> $student,
+        ];
+
+        return response()->json($data, 200);
+    }
 }
+
+/**
+ * Nama     : Hasna Azizah 
+ * Kelas    : SE03 / TI02
+ * NIM      : 0110222235
+ */
