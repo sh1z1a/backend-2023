@@ -28,20 +28,19 @@ class AnimalController extends Controller
     // request itu dipakai karna kita ngambil dri api, request itu fungsi bawaan laravel
     # method store - menambahkan hewan baru
     # parameter: hewan baru
-    public function store($animal, Request $request)
+    public function store(Request $request)
     {
         echo "Menambahkan hewan baru";
         echo "<br>";
         echo "Nama hewan : " , array_push($this->animals, $request->nama);
         echo "<br>";
-        $animal->store('Angsa');
-        $this->index();
+
 
     }
 
     # method update - mengupdate hewan
     # parameter: index dan hewan baru
-    public function update($animal, Request $request, $id )
+    public function update(Request $request, $id )
     {
         // echo "Nama hewan : ", $this->animals[$index] = $request->nama;
         // echo "<br>";
@@ -60,26 +59,32 @@ class AnimalController extends Controller
             echo "Hewan dengan $id tidak ditemukan.";
         }
         echo "<br>";
-        $animal->update(1, "Bebek");
         $this->index();
-
 
         
     }
 
     # method delete - menghapus hewan
     # parameter: index
-    public function destroy($animal, $index, Request $request, $id)
+    public function destroy($id)
     {
         # gunakan method unset atau array_splice 
         # untuk menghapus data array
         # array_splice untuk menghapus data array 
         # sekaligus iterasi nya atau indeks nya
-        array_splice($this->animals, $index, 1); #parameter 1 buat menentukan jumlah array yg dihapus
-        echo "Menghapus data hewn id $id";
+        $index = $id - 1;
 
-        $animal->destroy($id);
-        $animal->index();
+        if (isset($this->animals[$index])) {
+            array_splice($this->animals, $index, 1); #parameter 1 buat menentukan jumlah array yg dihapus
+            echo "Nama hewan : " . $this->animals[$index];
+            echo "<br>";
+            echo "Menghapus data animals id $id";
+        } else {
+            echo "Hewan dengan $id tidak ditemukan.";
+        }
+        echo "<br>";
+        $this->index();
+
     }
 }
 
