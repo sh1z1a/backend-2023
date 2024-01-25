@@ -3,77 +3,122 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
 
 class StudentController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $students = Student::all();
+        // menggunakan model student untuk select data
+        $student = Student::all();
 
         $data = [
             'message' => 'Get all students',
-            'data' => $students,
+            'data' => $student
         ];
 
         return response()->json($data, 200);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
+        // menangkap data request
         $input = [
             'nama' => $request->nama,
             'nim' => $request->nim,
             'email' => $request->email,
-            'jurusan' => $request->jurusan,
+            'jurusan' => $request->jurusan
         ];
 
+        // menggunakan model student untuk insert data
         $student = Student::create($input);
 
         $data = [
-            'message' => 'Student created',
+            'message' => 'Student is created successfully',
             'data' => $student,
         ];
 
+        // mengembalikan data (json) dan kode 201
         return response()->json($data, 201);
     }
 
-    public function update(Request $request, $id) {
-        // menangkap data request
-        $input = [
-            'nama'=> $request->nama,
-            'nim'=> $request->nim,
-            'email'=> $request->email,
-            'jurusan'=> $request->jurusan
-            ];
-        
-        // menggunakan model student untuk mengambil data (id) yang akan di update
-        $student = Student::where('id', $id)->update($input);
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**`
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $student = Student::find($id);
+
+        // cek data student
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+    
+        // Update data student
+        $student->nama = $request->nama;
+        $student->nim = $request->nim;
+        $student->email = $request->email;
+        $student->jurusan = $request->jurusan;
+        $student->save();
+    
         $data = [
-            'message'=> 'Data siswa telah berhasil di perbaharui',
-            'data'=> $student,
+            'message' => 'Student is updated successfully',
+            'data' => $student,
         ];
-
-        // mengembalikan dalam bentuk data json dan kode 200 (success)
+    
         return response()->json($data, 200);
     }
 
-    public function destroy($id) {
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        // cari data students berdasarkan id
+        $student = Student::find($id);
 
-        $student = Student::where('id', $id)->destroy();
+        // cek data student
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
 
-        $data = [
-            'message'=> 'Data siswa berhasil dihapus',
-            'data'=> $student,
+        // hapus data
+        $student->delete();
+
+        $message = [
+            'message' => 'Student is deleted successfully',
         ];
 
-        return response()->json($data, 200);
+        // mengembalikan data (json) dan kode 201
+        return response()->json($message, 200);
     }
 }
-
-/**
- * Nama     : Hasna Azizah 
- * Kelas    : SE03 / TI02
- * NIM      : 0110222235
- */
